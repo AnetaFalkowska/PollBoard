@@ -1,0 +1,5 @@
+<form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+    <input formControlName="email" placeholder="Email">
+    <input formControlName="password" placeholder="Password">
+    <button type="submit" [disabled]="authForm.invalid">Register</button>
+</form>
