@@ -3,6 +3,7 @@ import { AuthService } from '../../../core/auth/auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonComponent } from '../../../shared/button/button.component';
 import { InputComponent } from '../../../shared/input/input.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signin',
@@ -15,7 +16,7 @@ export class SigninComponent {
 
   constructor(
     private authService: AuthService,
-
+private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -48,7 +49,7 @@ export class SigninComponent {
 
     this.authService
       .login({ email, password })
-      .subscribe(() => console.log('Login successful'));
+      .subscribe(() => this.router.navigateByUrl('/surveys'));
   }
 
 }
