@@ -6,25 +6,35 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../../core/auth/auth.service';
-import { InputComponent } from "../../../shared/input/input.component";
-import { ButtonComponent } from "../../../shared/button/button.component";
+import { InputComponent } from '../../../shared/input/input.component';
+import { ButtonComponent } from '../../../shared/button/button.component';
+import { MatchPassword } from '../../../match-password';
+import { MatError } from '@angular/material/form-field';
+
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, InputComponent, ButtonComponent],
+  imports: [ReactiveFormsModule, InputComponent, ButtonComponent, MatError],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent implements OnInit {
   authForm!: FormGroup;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private matchPassword: MatchPassword
+  ) {}
 
   ngOnInit(): void {
-    this.authForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
-    });
+    this.authForm = new FormGroup(
+      {
+        email: new FormControl('', [Validators.required, Validators.email]),
+        password: new FormControl('', [Validators.required]),
+        passwordConfirmation: new FormControl('', [Validators.required]),
+      },
+      { validators: this.matchPassword.validate.bind(this.matchPassword) }
+    );
   }
 
   get emailControl() {
@@ -35,13 +45,19 @@ export class RegisterComponent implements OnInit {
     return this.authForm.get('password') as FormControl;
   }
 
+  get passwordConfirmation() {
+    return this.authForm.get('passwordConfirmation') as FormControl;
+  }
+
   onSubmit() {
     if (this.authForm.invalid) {
       return;
     }
 
+    const { email, password } = this.authForm.value;
+
     this.authService
-      .register(this.authForm.value)
+      .register({ email, password })
       .subscribe(() => console.log('User registered successfully!'));
   }
 }

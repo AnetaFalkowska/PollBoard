@@ -4,3 +4,8 @@
   width: 100%;
   margin: 50px auto;
 }
+
+.error {
+font-size: var(--mat-form-field-subscript-text-size, var(--mat-sys-body-small-size));
+margin-bottom: 15px;
+}
