@@ -1,21 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, of, throwError } from 'rxjs';
 
-
-interface RegisterCredentials {
-  email: string, password: string
+export interface UserCredentials {
+  email: string;
+  password: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  url = 'http://localhost:3000/auth/';
 
-  url = "http://localhost:3000/auth/"
+  constructor(private http: HttpClient) {}
 
-  constructor(private http:HttpClient) { }
-
-  register(credentials:RegisterCredentials) {
-    return this.http.post(this.url + 'register', credentials);
+  register(credentials: UserCredentials) {
+    return this.http.post(this.url + 'register', credentials).pipe(
+      catchError((err) => {
+        console.error(err);
+        return of(null);
+      })
+    );
   }
 }

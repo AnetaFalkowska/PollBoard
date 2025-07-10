@@ -1,5 +1,10 @@
-<form [formGroup]="authForm" (ngSubmit)="onSubmit()">
-    <input formControlName="email" placeholder="Email">
-    <input formControlName="password" placeholder="Password">
-    <button type="submit" [disabled]="authForm.invalid">Register</button>
+<form class="auth-form" [formGroup]="authForm" (ngSubmit)="onSubmit()">
+    <app-input inputType="email"
+    label="Email"
+    [control]="emailControl"></app-input>
+    <app-input inputType="text"
+    label="Password"
+    [control]="passwordControl"></app-input>
+    <app-button type="submit" [disabled]="authForm.invalid" title="Register"></app-button>
+    <!-- <app-button type="submit" [disabled]="authForm.invalid" title="Register"></app-button> -->
 </form>
