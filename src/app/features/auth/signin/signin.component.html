@@ -1,1 +1,19 @@
-<p>signin works!</p>
+<form class="auth-form" [formGroup]="authForm" (ngSubmit)="onSubmit()">
+  <app-input
+    inputType="email"
+    label="Email"
+    [control]="emailControl"
+  ></app-input>
+  <app-input
+    inputType="text"
+    label="Password"
+    [control]="passwordControl"
+  ></app-input>
+
+  <app-button
+    type="submit"
+    [disabled]="authForm.invalid"
+    title="Login"
+  ></app-button>
+
+</form>

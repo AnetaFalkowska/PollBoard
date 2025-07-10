@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, of, throwError } from 'rxjs';
+import { catchError, Observable, of, tap, throwError } from 'rxjs';
 
 export interface UserCredentials {
   email: string;
@@ -20,6 +20,14 @@ export class AuthService {
       catchError((err) => {
         console.error(err);
         return of(null);
+      })
+    );
+  }
+
+  login(credentials: UserCredentials):Observable<{token: string}> {
+    return this.http.post<{ token: string }>(this.url + 'login', credentials).pipe(
+      tap((response) => {
+        localStorage.setItem('token', response.token);
       })
     );
   }

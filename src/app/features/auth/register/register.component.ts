@@ -10,6 +10,7 @@ import { InputComponent } from '../../../shared/input/input.component';
 import { ButtonComponent } from '../../../shared/button/button.component';
 import { MatchPassword } from '../../../match-password';
 import { MatError } from '@angular/material/form-field';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private matchPassword: MatchPassword
+    private matchPassword: MatchPassword,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -58,6 +60,6 @@ export class RegisterComponent implements OnInit {
 
     this.authService
       .register({ email, password })
-      .subscribe(() => console.log('User registered successfully!'));
+      .subscribe({next:() => this.router.navigateByUrl('/')});
   }
 }
