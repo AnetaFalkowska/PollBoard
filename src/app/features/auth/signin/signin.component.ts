@@ -1,6 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { AuthService } from '../../../core/auth/auth.service';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ButtonComponent } from '../../../shared/button/button.component';
 import { InputComponent } from '../../../shared/input/input.component';
 import { Router } from '@angular/router';
@@ -9,25 +14,18 @@ import { Router } from '@angular/router';
   selector: 'app-signin',
   imports: [ReactiveFormsModule, InputComponent, ButtonComponent],
   templateUrl: './signin.component.html',
-  styleUrl: './signin.component.scss'
+  styleUrl: './signin.component.scss',
 })
 export class SigninComponent {
   authForm!: FormGroup;
 
-  constructor(
-    private authService: AuthService,
-private router:Router
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.authForm = new FormGroup(
-      {
-        email: new FormControl('', [Validators.required, Validators.email]),
-        password: new FormControl('', [Validators.required]),
-
-      },
-
-    );
+    this.authForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required]),
+    });
   }
 
   get emailControl() {
@@ -38,8 +36,6 @@ private router:Router
     return this.authForm.get('password') as FormControl;
   }
 
-
-
   onSubmit() {
     if (this.authForm.invalid) {
       return;
@@ -47,9 +43,9 @@ private router:Router
 
     const { email, password } = this.authForm.value;
 
-    this.authService
-      .login({ email, password })
-      .subscribe(() => this.router.navigateByUrl('/surveys'));
+    this.authService.login({ email, password }).subscribe(() => {
+      console.log('signed in');
+      this.router.navigateByUrl('/surveys');
+    });
   }
-
 }

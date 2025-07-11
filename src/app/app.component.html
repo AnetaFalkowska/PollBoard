@@ -1,7 +1,14 @@
 <mat-toolbar>
   <span>Poll Board</span>
   <span class="example-spacer"></span>
-  <a mat-button routerLink="">Sign in</a>
-  <a mat-button routerLink="/register">Sign up</a>
+  @if (!(isLoggedin$ | async)) {
+  <a mat-button routerLink="">Sign In</a>
+  <a mat-button routerLink="/register">Sign Up</a>
+  } @else {
+    <a mat-button routerLink="/surveys">Surveys</a>
+    <a mat-button routerLink="/signout">Sign Out</a>
+
+  }
+
 </mat-toolbar>
 <router-outlet />
