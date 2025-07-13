@@ -8,12 +8,12 @@ import {
 import { ApiService } from '../../../core/services/api.service';
 
 @Component({
-  selector: 'app-create-survey',
+  selector: 'app-form',
   imports: [ReactiveFormsModule],
-  templateUrl: './create-survey.component.html',
-  styleUrl: './create-survey.component.scss',
+  templateUrl: './form.component.html',
+  styleUrl: './form.component.scss',
 })
-export class CreateSurveyComponent implements OnInit {
+export class FormComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   surveyForm!: FormGroup;
