@@ -7,6 +7,6 @@ import { SignoutComponent } from './features/auth/signout/signout.component';
 export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: '', component: SigninComponent },
-  { path: 'singnout', component: SignoutComponent },
+  { path: 'signout', component: SignoutComponent },
   { path: 'surveys', component: HomeComponent },
 ];

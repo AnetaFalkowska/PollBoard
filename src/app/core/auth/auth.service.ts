@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, Observable, of, tap, throwError } from 'rxjs';
-
+import {jwtDecode} from 'jwt-decode';
 export interface UserCredentials {
   email: string;
   password: string;
@@ -16,6 +16,7 @@ export class AuthService {
   loggedIn$ = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient, private router: Router) {
+    console.log("constructor auth service", this.isTokenValid());
     this.loggedIn$.next(this.isTokenValid());
   }
 
@@ -27,10 +28,9 @@ export class AuthService {
       return false;
     }
     try {
-      const decodedToken:any = jwtDecode(token);
+      const decodedToken:any = jwtDecode(token);     
       const now = Math.floor(Date.now() / 1000);
-      console.log(decodedToken.expiresIn, now)
-      return decodedToken.expiresIn > now;
+      return decodedToken.exp > now;
     } catch (error) {
       return false;
     }
@@ -44,7 +44,7 @@ export class AuthService {
   setLogout() {
     localStorage.removeItem('token');
     this.loggedIn$.next(false);
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/signout');
   }
 
   register(credentials: UserCredentials) {
@@ -67,7 +67,4 @@ export class AuthService {
   }
 }
 
-function jwtDecode(token: string): any {
-  throw new Error('Function not implemented.');
-}
 

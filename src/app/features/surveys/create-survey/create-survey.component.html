@@ -1,2 +1,36 @@
-<p>create-survey works!</p>
-<button (click)="createSurvey()">Create</button>
+<form [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
+  <input
+    type="text"
+    placeholder="Survey Title"
+    formControlName="title"
+    required
+  />
+  <div formArrayName="questions">
+    @for (question of questions.controls; track question; let i = $index ) {
+    <div [formGroupName]="i">
+      <input
+        type="text"
+        placeholder="Question Text"
+        formControlName="text"
+        required
+      />
+      <button type="button" (click)="questions.removeAt(i)">X</button>
+      <div formArrayName="options">
+        @for (option of getOptions(i).controls; track option; let j = $index ) {
+        <input
+          type="text"
+          placeholder="Option Text"
+          [formControlName]="j"
+          required
+        />
+        <button type="button" (click)="removeOption(i,j)">X</button>
+        }
+        <button type="button" (click)="addOption(i)">Add Option</button>
+      </div>
+    </div>
+    }
+  </div>
+  <button type="button" (click)="addQuestion()">Add Question</button>
+  <button type="submit" [disabled]="surveyForm.invalid">Submit</button>
+ 
+</form>
