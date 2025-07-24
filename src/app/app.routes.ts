@@ -6,6 +6,8 @@ import { SignoutComponent } from './features/auth/signout/signout.component';
 import { SurveyDisplayComponent } from './features/surveys/survey-display/survey-display.component';
 import { SurveyCreateComponent } from './features/surveys/survey-create/survey-create.component';
 import { FormComponent } from './features/surveys/form/form.component';
+import { VoteSurveyComponent } from './features/vote/vote-survey/vote-survey.component';
+import { VoteConfirmComponent } from './features/vote/vote-confirm/vote-confirm.component';
 
 export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -17,4 +19,7 @@ export const routes: Routes = [
     children: [{ path: ':id', component: SurveyDisplayComponent }],
   },
   { path: 'create', component: FormComponent },
+  { path: 'vote/:id', component: VoteSurveyComponent },
+  { path: 'vote/:id/confirm', component: VoteConfirmComponent },
+  
 ];

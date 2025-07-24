@@ -1,0 +1,29 @@
+@if (survey) {
+<div>
+  <h2>{{ survey?.title }}</h2>
+  <form (ngSubmit)="saveAnswers()">
+    @for (question of survey.questions; track question.id) {
+    <div>
+      <p>
+        <strong>{{ question.text }}</strong>
+      </p>
+      @for (option of question.options; track option.id) {
+
+      <label>
+        <input
+          type="radio"
+          name="{{ question.id }}"
+          [value]="option.id"
+          [(ngModel)]="answers[question.id]"
+          required
+        />
+        {{ option.text }} </label
+      >}
+    </div>
+    }
+    <button type="submit">Zapisz odpowiedzi</button>
+  </form>
+</div>
+} @else {
+<p>Loading...</p>
+}

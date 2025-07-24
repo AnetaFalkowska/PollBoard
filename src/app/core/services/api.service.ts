@@ -59,4 +59,8 @@ export class ApiService {
       })
     );
   }
+
+  getSurvey(id: string): Observable<SurveyFromApi> {
+    return this.http.get<SurveyFromApi>(`${this.url}${id}`)
+  }
 }
